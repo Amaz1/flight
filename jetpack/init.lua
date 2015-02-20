@@ -1,6 +1,6 @@
 dofile(minetest.get_modpath("jetpack") .. "/config.lua")
 if jetpack.fast == true then
-    playereffects.register_effect_type("fly", "Fly mode available", "jetpack.png", {"fly"},
+    playereffects.register_effect_type("flyj", "Fly mode available", "jetpack.png", {"fly"},
         function(player)
             local playername = player:get_player_name()
             local privs = minetest.get_player_privs(playername)
@@ -17,7 +17,7 @@ if jetpack.fast == true then
         false,
         false)
     else
-        playereffects.register_effect_type("fly", "Fly mode available", "jetpack.png", {"fly"},
+        playereffects.register_effect_type("flyj", "Fly mode available", "jetpack.png", {"fly"},
             function(player)
                 local playername = player:get_player_name()
                 local privs = minetest.get_player_privs(playername)
@@ -38,7 +38,7 @@ minetest.register_craftitem("jetpack:jetpack", {
     inventory_image = "jetpack.png",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)
-        playereffects.apply_effect_type("fly", jetpack.time, user)
+        playereffects.apply_effect_type("flyj", jetpack.time, user)
         itemstack:take_item()
         return itemstack
     end,
@@ -49,7 +49,7 @@ minetest.register_craftitem("jetpack:jetpack_bronze", {
     inventory_image = "jetpack_bronze.png",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)
-        playereffects.apply_effect_type("fly", jetpack.time_bronze, user)
+        playereffects.apply_effect_type("flyj", jetpack.time_bronze, user)
         itemstack:take_item()
         return itemstack
     end,
@@ -60,7 +60,7 @@ minetest.register_craftitem("jetpack:jetpack_gold", {
     inventory_image = "jetpack_gold.png",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)
-        playereffects.apply_effect_type("fly", jetpack.time_gold, user)
+        playereffects.apply_effect_type("flyj", jetpack.time_gold, user)
         itemstack:take_item()
         return itemstack
     end,
