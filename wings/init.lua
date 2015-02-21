@@ -23,12 +23,12 @@ if wings.fast == true then
                 local privs = minetest.get_player_privs(playername)
                 privs.fly = true
                 minetest.set_player_privs(playername, privs)
-                end,
+            end,
             function(effect, player)
                 local privs = minetest.get_player_privs(effect.playername)
                 privs.fly = nil
                 minetest.set_player_privs(effect.playername, privs)
-                end,
+            end,
             false,
             false)
 end
@@ -38,9 +38,15 @@ minetest.register_craftitem("wings:wings", {
     inventory_image = "wings.png",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)
-        playereffects.apply_effect_type("fly", wings.time, user)
-        itemstack:take_item()
-        return itemstack
+        local playername = user:get_player_name()
+        local privs = minetest.get_player_privs(playername)
+        if privs.fly == true then
+            minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of these wings!")
+        else
+            playereffects.apply_effect_type("fly", wings.time, user)
+            itemstack:take_item()
+            return itemstack
+        end
     end,
 })
 
@@ -49,9 +55,15 @@ minetest.register_craftitem("wings:wings_bronze", {
     inventory_image = "wings_bronze.png",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)
-        playereffects.apply_effect_type("fly", wings.time_bronze, user)
-        itemstack:take_item()
-        return itemstack
+        local playername = user:get_player_name()
+        local privs = minetest.get_player_privs(playername)
+        if privs.fly == true then
+            minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of these wings!")
+        else
+            playereffects.apply_effect_type("fly", wings.time_bronze, user)
+            itemstack:take_item()
+            return itemstack
+        end
     end,
 })
 
@@ -60,9 +72,15 @@ minetest.register_craftitem("wings:wings_gold", {
     inventory_image = "wings_gold.png",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)
-        playereffects.apply_effect_type("fly", wings.time_gold, user)
-        itemstack:take_item()
-        return itemstack
+        local playername = user:get_player_name()
+        local privs = minetest.get_player_privs(playername)
+        if privs.fly == true then
+            minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of these wings!")
+        else
+            playereffects.apply_effect_type("fly", wings.time_gold, user)
+            itemstack:take_item()
+            return itemstack
+        end
     end,
 })
 
