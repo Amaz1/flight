@@ -28,7 +28,7 @@ if jetpack.fast == true then
                 local privs = minetest.get_player_privs(effect.playername)
                 privs.fly = nil
                 minetest.set_player_privs(effect.playername, privs)
-                end,
+            end,
             false,
             false)
 end
@@ -75,7 +75,7 @@ minetest.register_craftitem("jetpack:jetpack_gold", {
         local playername = user:get_player_name()
         local privs = minetest.get_player_privs(playername)
         if privs.fly == true then
-            minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of these wings!")
+            minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of this jetpack!")
         else
             playereffects.apply_effect_type("flyj", jetpack.time_gold, user)
             itemstack:take_item()
