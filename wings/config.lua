@@ -13,5 +13,15 @@ wings.time = 7
 wings.time_bronze = 15
 wings.time_gold = 30
 
---If you want wings to be avalible only through /giveme or at admin shops, set this to false
+--This is how much the time is divided by when mana is used.
+--As the wings can be used an unlimited number of times, flight needs to last for a shorter period of time.
+wings.mana_divisor = 2
+
+--If you want wings to be avalible only through /giveme or at admin shops, set this to false.
 wings.crafts = true
+
+--How much mana is needed for each type of wings.
+--By default, the mana mod has a limit of 200 mana.
+wings.mana = 100
+wings.mana_bronze = 150
+wings.mana_gold = 200

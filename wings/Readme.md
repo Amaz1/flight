@@ -9,10 +9,11 @@ This mod can be configured through the config.lua file. Each option has a descri
 
 ####Dependencies:
 This mod only depends on the playereffects mod, with an optional dependency on default for the crafts.
+It also has an optional dependency on mana, which only allows players with a certain amount of mana to use the wings.
 
 ####Todo:
-- Add support for the [mana mod.](https://forum.minetest.net/viewtopic.php?f=9&t=11154)
 - Maybe try and make better textures. (If you can make them, please do!)
+- Add an option for wear on the wings
 
 ####Licenses:
 Code and images are licensed under the WFTPL.

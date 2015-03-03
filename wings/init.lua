@@ -33,6 +33,20 @@ if wings.fast == true then
             false)
 end
 
+wings.mana_check = function(player, cost)
+	local allowed
+	if minetest.get_modpath("mana") then
+		if mana.subtract(player:get_player_name(), cost) then
+			allowed = true
+		else
+			allowed = false
+		end
+	else
+		allowed = true
+	end
+	return allowed
+end
+
 minetest.register_craftitem("wings:wings", {
     description = "Wings",
     inventory_image = "wings.png",
@@ -42,6 +56,10 @@ minetest.register_craftitem("wings:wings", {
         local privs = minetest.get_player_privs(playername)
         if privs.fly == true then
             minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of these wings!")
+        elseif minetest.get_modpath("mana") then
+            if wings.mana_check(user, wings.mana) then
+                playereffects.apply_effect_type("fly", wings.time / wings.mana_divisor, user)
+            end
         else
             playereffects.apply_effect_type("fly", wings.time, user)
             itemstack:take_item()
@@ -59,6 +77,10 @@ minetest.register_craftitem("wings:wings_bronze", {
         local privs = minetest.get_player_privs(playername)
         if privs.fly == true then
             minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of these wings!")
+        elseif minetest.get_modpath("mana") then
+            if wings.mana_check(user, wings.mana_bronze) then
+                playereffects.apply_effect_type("fly", wings.time_bronze / wings.mana_divisor, user)
+            end
         else
             playereffects.apply_effect_type("fly", wings.time_bronze, user)
             itemstack:take_item()
@@ -76,6 +98,10 @@ minetest.register_craftitem("wings:wings_gold", {
         local privs = minetest.get_player_privs(playername)
         if privs.fly == true then
             minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of these wings!")
+        elseif minetest.get_modpath("mana") then
+            if wings.mana_check(user, wings.mana_gold) then
+                playereffects.apply_effect_type("fly", wings.time_gold / wings.mana_divisor, user)
+            end
         else
             playereffects.apply_effect_type("fly", wings.time_gold, user)
             itemstack:take_item()
