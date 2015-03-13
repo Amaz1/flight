@@ -37,7 +37,7 @@ function carpet:on_rightclick(clicker)
 		end
 	elseif not self.driver then
 		self.driver = clicker
-		clicker:set_attach(self.object, "", {x=0,y=10.1,z=0}, {x=0,y=90,z=0})
+		clicker:set_attach(self.object, "", {x=-4,y=10.1,z=0}, {x=0,y=90,z=0})
 		default.player_attached[name] = true
 		minetest.after(0.2, function()
 			default.player_set_animation(clicker, "sit" , 10)
