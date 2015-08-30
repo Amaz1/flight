@@ -15,4 +15,4 @@ This mod only depends on the playereffects mod, with an optional dependency on d
 - Sugestions welcome!
 
 ####Licenses:
-Code and images are licensed under the WFTPL.
+Code and images are licensed under the MIT license.

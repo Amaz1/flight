@@ -19,4 +19,4 @@ It also has an optional dependency on mana, which only allows players with a cer
 The code for getting the wings to use mana comes from Wuzzy's [Mirror of Returning mod.](https://forum.minetest.net/viewtopic.php?f=11&t=11224)
 
 ####Licenses:
-Code and images are licensed under the WFTPL.
+Code and images are licensed under the MIT license.
