@@ -1,4 +1,5 @@
-dofile(minetest.get_modpath("flyingcarpet") .. "/config.lua")
+flyingcarpet = {}
+local player_properties = minetest.get_modpath("mcl_player") and mcl_player or default
 
 local function get_sign(i)
 	if i == 0 then
@@ -30,17 +31,17 @@ function carpet:on_rightclick(clicker)
 	if self.driver and clicker == self.driver then
 		clicker:set_detach()
 		self.driver = nil
-		default.player_attached[name] = false
-		default.player_set_animation(clicker, "stand" , 10)
-		if flyingcarpet.one_use == true then
+		player_properties.player_attached[name] = false
+		player_properties.player_set_animation(clicker, "stand" , 10)
+		if minetest.settings:get_bool("flyingcarpet.one_use", false) == true then
 			self.object:remove()
 		end
 	elseif not self.driver then
 		self.driver = clicker
 		clicker:set_attach(self.object, "", {x=-4,y=10.1,z=0}, {x=0,y=90,z=0})
-		default.player_attached[name] = true
+		player_properties.player_attached[name] = true
 		minetest.after(0.2, function()
-			default.player_set_animation(clicker, "sit" , 10)
+			player_properties.player_set_animation(clicker, "sit" , 10)
 		end)
 		self.object:setyaw(clicker:get_look_yaw()-math.pi/2)
 	end
@@ -156,7 +157,8 @@ minetest.register_craftitem("flyingcarpet:carpet", {
 	end,
 })
 
-if flyingcarpet.crafts == true then
+if minetest.settings:get_bool("flyingcarpet.crafts",true) == true then
+	  if minetest.get_modpath("default") ~= nil then
 	minetest.register_craft({
         output = "flyingcarpet:carpet",
         recipe = {
@@ -164,4 +166,13 @@ if flyingcarpet.crafts == true then
             {"default:mese", "default:goldblock", "default:mese"},
         },
     })
+	elseif minetest.get_modpath("mcl_core") ~= nil then
+		minetest.register_craft({
+	        output = "flyingcarpet:carpet",
+	        recipe = {
+	            {"group:wool", "group:wool", "group:wool"},
+	            {"mesecons:redstone", "mcl_core:goldblock", "mesecons:redstone"},
+	        },
+	    })
+	end
 end
