@@ -5,3 +5,7 @@ Two of these mods have a dependency on [Wuzzy's playereffects mod](https://forum
 All of the mods can be configured extensively through the config.lua file found in each mod.
 
 Look at the readme's of the mods for more info.
+
+### License
+
+Code and images are licensed under the MIT license.

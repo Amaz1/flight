@@ -1,5 +1,10 @@
-dofile(minetest.get_modpath("jetpack") .. "/config.lua")
-if jetpack.fast == true then
+local jetpack_fast = minetest.settings:get_bool("jetpack.fast", false)
+local jetpack_crafts = minetest.settings:get_bool("jetpack.crafts", false)
+local jetpack_time = tonumber(minetest.settings:get("jetpack.time")) or 7
+local jetpack_time_bronze = tonumber(minetest.settings:get("jetpack.time_bronze")) or 15
+local jetpack_time_gold = tonumber(minetest.settings:get("jetpack.time_gold")) or 30
+
+if jetpack_fast == true then
     playereffects.register_effect_type("flyj", "Fly mode available", "jetpack.png", {"fly"},
         function(player)
             local playername = player:get_player_name()
@@ -43,7 +48,8 @@ minetest.register_craftitem("jetpack:jetpack", {
         if privs.fly == true then
             minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of this jetpack!")
         else
-            playereffects.apply_effect_type("flyj", jetpack.time, user)
+            minetest.log("Jetpack time"..jetpack_time)
+            playereffects.apply_effect_type("flyj", jetpack_time, user)
             itemstack:take_item()
             return itemstack
         end
@@ -60,7 +66,8 @@ minetest.register_craftitem("jetpack:jetpack_bronze", {
         if privs.fly == true then
             minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of this jetpack!")
         else
-            playereffects.apply_effect_type("flyj", jetpack.time_bronze, user)
+          minetest.log("Jetpack time"..jetpack_time_bronze)
+            playereffects.apply_effect_type("flyj", jetpack_time_bronze, user)
             itemstack:take_item()
             return itemstack
         end
@@ -77,18 +84,21 @@ minetest.register_craftitem("jetpack:jetpack_gold", {
         if privs.fly == true then
             minetest.chat_send_player(playername, "You already have the fly priv, and so have no need of this jetpack!")
         else
-            playereffects.apply_effect_type("flyj", jetpack.time_gold, user)
+          minetest.log("Jetpack time"..jetpack_time_gold)
+            playereffects.apply_effect_type("flyj", jetpack_time_gold, user)
             itemstack:take_item()
             return itemstack
         end
     end,
 })
 
-if jetpack.crafts == true and minetest.get_modpath("default") ~= nil then
-    minetest.register_craftitem("jetpack:jetpack_base", {
-        description = "Jetpack Tubes",
-        inventory_image = "jetpack_base.png",
-    })
+minetest.register_craftitem("jetpack:jetpack_base", {
+    description = "Jetpack Tubes",
+    inventory_image = "jetpack_base.png",
+})
+
+if jetpack_crafts == true then
+  if minetest.get_modpath("default") ~= nil then
     minetest.register_craft({
         output = "jetpack:jetpack_base",
         recipe = {
@@ -121,10 +131,40 @@ if jetpack.crafts == true and minetest.get_modpath("default") ~= nil then
             {"default:diamond", "default:mese_crystal", "default:diamond"},
         },
     })
+
+elseif minetest.get_modpath("mcl_core") ~= nil then
+
+  minetest.register_craft({
+  output = "jetpack:jetpack_base",
+  recipe = {
+      {"mcl_core:ironblock", "mcl_minecarts:chest_minecart", "mcl_core:ironblock"},
+      {"mcl_core:gold_ingot", "mcl_core:diamondblock", "mcl_core:gold_ingot"},
+      {"mcl_core:lapisblock", "mcl_core:emeraldblock", "mcl_core:lapisblock"},
+  },
+})
+
+minetest.register_craft({
+    output = "jetpack:jetpack",
+    recipe = {
+        {"mcl_core:gold_nugget", "jetpack:jetpack_base", "mcl_core:gold_nugget"},
+        {"mcl_core:goldblock", "mcl_end:end_rod_green", "mcl_core:goldblock"},
+        {"mcl_core:diamond", "mcl_potions:swiftness", "mcl_core:diamond"},
+    },
+})
+
+minetest.register_craft({
+    output = "jetpack:jetpack_gold",
+    recipe = {
+        {"mcl_core:diamondblock", "jetpack:jetpack_base", "mcl_core:diamondblock"},
+        {"mcl_core:emeraldblock", "mcl_core:goldblock", "mcl_core:emeraldblock"},
+        {"mcl_core:diamond", "mesecons:redstone", "mcl_core:diamond"},
+    },
+})
+end
 end
 
 --Not sure if this is a hack, but it stops unkown items appearing if jetpack.crafts is set to false, while removing them from the creative inventory.
-if jetpack.crafts == false then
+if jetpack_crafts == false then
     minetest.register_craftitem("jetpack:jetpack_base", {
         description = "Jetpack Tubes",
         inventory_image = "jetpack_base.png",
